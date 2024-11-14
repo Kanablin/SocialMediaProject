@@ -25,10 +25,12 @@ public class Account implements AccountInterface {
         this.name = info[0];
         this.password = info[1];
         this.friendsOnly = Boolean.parseBoolean(info[2]);
+        this.friends = friends;
+        this.blocked = blocked;
     }
 
     public Account(String data, ArrayList<Account> friends, ArrayList<Account> blocked) {
-        //exp: "Cassandra Conners, password123, true, "
+        //exp: "Cassandra Conners, password123, true, friends, blocked"
         String[] info = data.split("<", 3);
         String[] userInfo = info[0].split(",");
         for (int i = 0; i < userInfo.length; i++) {
@@ -115,9 +117,10 @@ public class Account implements AccountInterface {
         return this.name.equals(account.getName());
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(name).append(", ").append(password).append(", ").append(friendsOnly);
+        sb = sb.append(name).append(", ").append(password).append(", ").append(friendsOnly);
 
         if (friends != null && !friends.isEmpty()) {
             sb.append("<");
@@ -127,6 +130,8 @@ public class Account implements AccountInterface {
                     sb.append(", ");
                 }
             }
+        } else {
+            sb.append(friends);
         }
 
         if (blocked != null && !blocked.isEmpty()) {
@@ -137,9 +142,10 @@ public class Account implements AccountInterface {
                     sb.append(", ");
                 }
             }
+        } else {
+            sb.append(blocked);
         }
 
         return sb.toString();
     }
 }
-
