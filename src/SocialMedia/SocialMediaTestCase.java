@@ -63,7 +63,7 @@ public class SocialMediaTestCase {
         }
         // doubles the file
 
-        @Test public void testoutputAccountInfo() {
+        @Test public void testOutputAccountInfo() {
             SocialMediaDatabase media = new SocialMediaDatabase("inputAccountSaveFile.txt", "inputDirectMessageFile.txt");
             assertEquals(true, media.outputAccountInfo());
             ArrayList<String> actual = new ArrayList<>();
@@ -88,7 +88,7 @@ public class SocialMediaTestCase {
             assertEquals(actual, written);
         }
 
-        @Test public void testreadDMFileNames() {
+        @Test public void testReadDMFileNames() {
             SocialMediaDatabase media = new SocialMediaDatabase("inputAccountSaveFile.txt", "inputDirectMessageFile.txt");
             ArrayList<String> test = new ArrayList();
             ArrayList<String> messageNames = new ArrayList();
@@ -98,7 +98,7 @@ public class SocialMediaTestCase {
             assertEquals(messageNames, media.getDMs());
         }
 
-        @Test public void testoutputDMsNames() {
+        @Test public void testOutputDMsNames() {
             SocialMediaDatabase media = new SocialMediaDatabase("inputAccountSaveFile.txt", "inputDirectMessageFile.txt");
             assertEquals(true, media.outputDMFileNames());
             ArrayList<String> actual = new ArrayList<>();
@@ -130,10 +130,10 @@ public class SocialMediaTestCase {
             assertEquals(actual, output);
         } //Returns same thing, but says incorrect
 
-        @Test public void testoutputDMs() {
+        @Test public void testOutputDMs() {
             SocialMediaDatabase media = new SocialMediaDatabase("inputAccountSaveFile.txt", "inputDirectMessageFile.txt");
             assertEquals(true, media.outputDMs("inputDirectMessageFile.txt", media.getDMs()));
-            ArrayList<String> readMessagesName = new ArrayList<>();
+            ArrayList<String> readMessagesName = new ArrayList<String>();
             readMessagesName = media.readDMFileNames();
             ArrayList<String> written = new ArrayList<>();
             try {
@@ -261,18 +261,19 @@ public class SocialMediaTestCase {
         }
         // Says failed, but the concepts being compared are in fact identical
 
-        @Test public void testFindAcount() {
+        @Test public void testFindAccount() {
             SocialMediaDatabase media = new SocialMediaDatabase("inputAccountSaveFile.txt", "inputDirectMessageFile.txt");
             Account John = new Account("John, newPassword, true");
-            Account Sarah = new Account("Sarah, newPssword, true");
-            Account Peter = new Account("Peter, newPssword, true");
-            ArrayList<Account> Friends = new ArrayList<>();
-            ArrayList<Account> Blocked = new ArrayList<>();
-            Friends.add(John);
-            Friends.add(Sarah);
-            Blocked.add(Peter);
-            Account friend1 = new Account("Alice, newPassword8, true", Friends, Blocked);
-            Account returned = null;
+            Account Sarah = new Account("Sarah, newPassword, true");
+            Account Peter = new Account("Peter, newPassword, true");
+            ArrayList<Account> testFriends = new ArrayList<>();
+            ArrayList<Account> testBlocked = new ArrayList<>();
+            testFriends.add(John);
+            testFriends.add(Sarah);
+            testBlocked.add(Peter);
+            Account friend1 = new Account("Alice, newPassword8, true", testFriends, testBlocked);
+            media.addAccount(friend1.toString());
+            Account returned = friend1;
             try {
                 returned = media.findAccount("Alice");
             } catch (BadDataException e) {
